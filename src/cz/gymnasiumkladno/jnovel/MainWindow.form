@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="cz.gymnasiumkladno.jnovel.MainWindow">
+  <grid id="27dc6" binding="rootPanel" layout-manager="GridLayoutManager" row-count="6" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="3" left="3" bottom="3" right="3"/>
+    <constraints>
+      <xy x="20" y="20" width="413" height="341"/>
+    </constraints>
+    <properties>
+      <enabled value="true"/>
+      <visible value="true"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="c960c" class="javax.swing.JLabel" binding="img">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Java Novel klient"/>
+        </properties>
+      </component>
+      <tabbedpane id="a53d7" binding="tabbedPane1" default-binding="true">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="5" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="200" height="200"/>
+          </grid>
+        </constraints>
+        <properties>
+          <doubleBuffered value="false"/>
+          <enabled value="true"/>
+          <opaque value="false"/>
+          <visible value="true"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <grid id="e2880" layout-manager="GridLayoutManager" row-count="5" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <tabbedpane title="NDS &amp; síť"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="bc9a2" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <labelFor value="2aad2"/>
+                  <text value="Kontext:"/>
+                </properties>
+              </component>
+              <component id="25e9" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <labelFor value="13c1f"/>
+                  <text value="Server:"/>
+                </properties>
+              </component>
+              <component id="5d2a5" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <labelFor value="191ff"/>
+                  <text value="Server IP:"/>
+                </properties>
+              </component>
+              <component id="8c983" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <labelFor value="d4f79"/>
+                  <text value="Přípojné místo:"/>
+                </properties>
+              </component>
+              <component id="2aad2" class="javax.swing.JComboBox" binding="kontext">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <editable value="true"/>
+                  <model/>
+                </properties>
+              </component>
+              <component id="13c1f" class="javax.swing.JComboBox" binding="server">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <editable value="true"/>
+                </properties>
+              </component>
+              <component id="191ff" class="javax.swing.JComboBox" binding="serverip">
+                <constraints>
+                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <editable value="true"/>
+                </properties>
+              </component>
+              <component id="d4f79" class="javax.swing.JComboBox" binding="mountpoint">
+                <constraints>
+                  <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <editable value="true"/>
+                </properties>
+              </component>
+              <component id="3430a" class="javax.swing.JButton" binding="getkontext">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="..."/>
+                </properties>
+              </component>
+              <component id="fb3fd" class="javax.swing.JButton" binding="getmountpoint">
+                <constraints>
+                  <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <alignmentY value="0.5"/>
+                  <text value="..."/>
+                </properties>
+              </component>
+              <component id="86948" class="javax.swing.JCheckBox" binding="onlytcp">
+                <constraints>
+                  <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <selected value="true"/>
+                  <text value="Jen TCP"/>
+                </properties>
+              </component>
+              <vspacer id="f3d9a">
+                <constraints>
+                  <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                    <preferred-size width="11" height="17"/>
+                  </grid>
+                </constraints>
+              </vspacer>
+            </children>
+          </grid>
+          <grid id="b4fef" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <tabbedpane title="Odpojit"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="d587" class="javax.swing.JButton" binding="disconnect">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Odpojit"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="fa3f2" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <tabbedpane title="O programu"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="bc5af" class="javax.swing.JTextArea">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="50"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <dragEnabled value="false"/>
+                  <editable value="false"/>
+                  <text value="JNovel Client - Javovské grafické rozhraní okolo ncpfs&#10;(C) Jakub Vaněk 2014 - http://jakubvanekpc.jecool.net/&#10;Licence: GPL 3.0"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+        </children>
+      </tabbedpane>
+      <component id="e31af" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <labelFor value="5e1e8"/>
+          <text value="Heslo: "/>
+        </properties>
+      </component>
+      <component id="33ae7" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <labelFor value="8499d"/>
+          <text value="Uživatelské jméno: "/>
+        </properties>
+      </component>
+      <component id="8499d" class="javax.swing.JTextField" binding="username">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="5e1e8" class="javax.swing.JPasswordField" binding="password">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="3c811" class="javax.swing.JButton" binding="stornoButton" default-binding="true">
+        <constraints>
+          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <margin top="2" left="2" bottom="2" right="2"/>
+          <text value="Storno"/>
+        </properties>
+      </component>
+      <component id="430ea" class="javax.swing.JButton" binding="nastaveníButton" default-binding="true">
+        <constraints>
+          <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <margin top="2" left="2" bottom="2" right="2"/>
+          <text value="Nastavení &gt;&gt;"/>
+        </properties>
+      </component>
+      <component id="b7598" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="4" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font style="1"/>
+          <opaque value="false"/>
+          <text value="Jenom síťový login"/>
+        </properties>
+        <clientProperties>
+          <html.disable class="java.lang.Boolean" value="false"/>
+        </clientProperties>
+      </component>
+      <component id="5b951" class="javax.swing.JButton" binding="Login">
+        <constraints>
+          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <margin top="2" left="2" bottom="2" right="2"/>
+          <text value="OK"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

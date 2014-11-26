@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Main-Class: cz.gymnasiumkladno.jnovel.Main
+Created-By: Jakub Vaněk
+Application-Name: JNovelClient
+Application-Description: Java Novel klient
+Application-Version: 1.0
