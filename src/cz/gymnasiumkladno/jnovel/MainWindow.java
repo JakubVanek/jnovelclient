@@ -1,12 +1,13 @@
 package cz.gymnasiumkladno.jnovel;
 
+import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
 
 /**
@@ -29,7 +30,10 @@ public class MainWindow extends JFrame {
 	private JButton getmountpoint;
 	private JCheckBox onlytcp;
 	private JButton disconnect;
+	private JSeparator separator;
 	private Preferences prefs;
+
+	ResourceBundle bundle;
 	public MainWindow()
 	{
 		super("JNovel Client");
@@ -37,14 +41,15 @@ public class MainWindow extends JFrame {
 		setContentPane(rootPanel);
 		BufferedImage image;
 		try{
-			image=ImageIO.read(new File("/home/kuba/images/logo.png"));
-			ImageIcon icon = new ImageIcon(image,"Java Novel klient pro Linux\n\t(C) Jakub Vaněk 2014");
+			image=ImageIO.read(ClassLoader.getSystemResourceAsStream("logo.png"));
+			ImageIcon icon = new ImageIcon(image,"Java Novel client for Linux\n\t(C) Jakub Vaněk 2014");
 			img.setText("");
 			img.setIcon(icon);
 		} catch(Exception e) {
 			img.removeAll();
-			img.setText("Java Novel klient");
+			img.setText("Java Novel client");
 		}
+		bundle = ResourceBundle.getBundle("Strings");
 		pack();
 		setResizable(false);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -53,11 +58,12 @@ public class MainWindow extends JFrame {
 		Login.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				LogWindow w = new LogWindow(MainWindow.this,(String)server.getSelectedItem(),
-						(String)serverip.getSelectedItem(),
-						(String)kontext.getSelectedItem(),
+				Process proc = Networking.connect((String) server.getSelectedItem(),
+						(String) serverip.getSelectedItem(),
+						(String) kontext.getSelectedItem(),
 						username.getText(),
-						password.getText(), (String)mountpoint.getSelectedItem(),onlytcp.isSelected());
+						password.getText(), (String) mountpoint.getSelectedItem(), onlytcp.isSelected());
+				LogProcWindow w = new LogProcWindow(MainWindow.this,proc);
 			}
 		});
 		stornoButton.addActionListener(new ActionListener() {
@@ -72,10 +78,12 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				tabbedPane1.setVisible(!tabbedPane1.isVisible());
 				tabbedPane1.setEnabled(!tabbedPane1.isEnabled());
+				separator.setVisible(!separator.isVisible());
+				separator.setEnabled(!separator.isEnabled());
 				if(!tabbedPane1.isVisible()){
-					nastaveníButton.setText("Nastavení >>");
+					nastaveníButton.setText(bundle.getString("Main.expandSet"));
 				}else{
-					nastaveníButton.setText(">> Nastavení");
+					nastaveníButton.setText(bundle.getString("Main.collapseSet"));
 				}
 				pack();
 			}
@@ -87,14 +95,15 @@ public class MainWindow extends JFrame {
 		getkontext.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-			// FIXME dodělat
+				addField(kontext, ContextTree.getContextName(MainWindow.this,(String)serverip.getSelectedItem()));
+				savePrefs();
 			}
 		});
 		getmountpoint.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new JFileChooser();
-				chooser.setDialogTitle("Zadejte přípojný bod...");
+				chooser.setDialogTitle(bundle.getString("Main.getmount"));
 				chooser.setCurrentDirectory(new File("."));
 				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				chooser.setAcceptAllFileFilterUsed(false);
@@ -138,7 +147,9 @@ public class MainWindow extends JFrame {
 		disconnect.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Networking.disConnect((String)mountpoint.getSelectedItem());
+
+				Process proc = Networking.disConnect((String)mountpoint.getSelectedItem());
+				LogProcWindow w = new LogProcWindow(MainWindow.this,proc);
 			}
 		});
 	}
@@ -152,7 +163,7 @@ public class MainWindow extends JFrame {
 		savePrefs();
 	}
 
-	private void add(JComboBox<String> field, String value) {
+	private void addField(JComboBox<String> field, String value) {
 		DefaultComboBoxModel<String> items = (DefaultComboBoxModel<String>)field.getModel();
 		if(items.getIndexOf(value)==-1)
 			field.addItem(value);
@@ -167,10 +178,10 @@ public class MainWindow extends JFrame {
 		String mount = prefs.get("mountpoint","/mnt/ncp");
 		boolean tcp = prefs.getBoolean("tcp", true);
 		username.setText(user);
-		add(kontext,ctx);
-		add(server,srv);
-		add(serverip,srvip);
-		add(mountpoint,mount);
+		addField(kontext, ctx);
+		addField(server, srv);
+		addField(serverip, srvip);
+		addField(mountpoint,mount);
 		onlytcp.setSelected(tcp);
 	}
 	private void savePrefs(){
