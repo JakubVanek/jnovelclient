@@ -18,8 +18,9 @@ public class LogProcWindow extends JDialog {
 	private JPanel root;
 	private JButton OKButton;
 	boolean ok = true;
+	public boolean Success=false;
 	public LogProcWindow(final Window owner, final Process p){
-		super(owner,"Připojení");
+		super(owner,"Process:");
 		setContentPane(root);
 		pack();
 		setResizable(true);
@@ -79,20 +80,24 @@ public class LogProcWindow extends JDialog {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				if (p.exitValue() == 0)
+				if (p.exitValue() == 0) {
+					Success = true;
 					SwingUtilities.invokeLater(new Runnable() {
 						@Override
 						public void run() {
 							appendText("\n--- Hotovo :) ---");
 						}
 					});
-				else
+				}
+				else {
+					Success = false;
 					SwingUtilities.invokeLater(new Runnable() {
 						@Override
 						public void run() {
 							appendText("\n--- Nastala chyba :( ---");
 						}
 					});
+				}
 			}
 		});
 		worker.start();

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Networking {
-	public static Process connect(String serverName, String dnsName, String user, String context, String password, String mountpath, boolean tcp) {
+	public static Process connect(String serverName, String dnsName, String user, String password, String context, String mountpath, boolean tcp) {
 		try {
 			String[] CMD;
 			if(!password.isEmpty()) {

@@ -5,6 +5,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ResourceBundle;
@@ -39,9 +41,8 @@ public class MainWindow extends JFrame {
 		super("JNovel Client");
 		prefs = Preferences.userNodeForPackage(cz.gymnasiumkladno.jnovel.MainWindow.class);
 		setContentPane(rootPanel);
-		BufferedImage image;
 		try{
-			image=ImageIO.read(ClassLoader.getSystemResourceAsStream("logo.png"));
+			BufferedImage image=ImageIO.read(ClassLoader.getSystemResourceAsStream("logo.png"));
 			ImageIcon icon = new ImageIcon(image,"Java Novel client for Linux\n\t(C) Jakub Vaněk 2014");
 			img.setText("");
 			img.setIcon(icon);
@@ -49,10 +50,24 @@ public class MainWindow extends JFrame {
 			img.removeAll();
 			img.setText("Java Novel client");
 		}
+		try{
+			BufferedImage icon=ImageIO.read(ClassLoader.getSystemResourceAsStream("icon.png"));
+			setIconImage(icon);
+
+		} catch(Exception ignored) {
+		}
 		bundle = ResourceBundle.getBundle("Strings");
+		setTitle(bundle.getString("Main.title"));
 		pack();
 		setResizable(false);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		addWindowStateListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				savePrefs();
+				super.windowClosing(e);
+			}
+		});
 		loadPrefs();
 		setVisible(true);
 		Login.addActionListener(new ActionListener() {
@@ -64,6 +79,10 @@ public class MainWindow extends JFrame {
 						username.getText(),
 						password.getText(), (String) mountpoint.getSelectedItem(), onlytcp.isSelected());
 				LogProcWindow w = new LogProcWindow(MainWindow.this,proc);
+				if(w.Success) {
+					savePrefs();
+					dispose();
+				}
 			}
 		});
 		stornoButton.addActionListener(new ActionListener() {
