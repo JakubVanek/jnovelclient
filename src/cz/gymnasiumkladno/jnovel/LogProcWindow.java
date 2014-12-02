@@ -42,6 +42,12 @@ public class LogProcWindow extends JDialog {
 				} catch (Exception ignored) {
 					return;
 				}
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						appendText(p.toString());
+					}
+				});
 				while (ok) {
 					try {
 						final String append = stdout.readLine();

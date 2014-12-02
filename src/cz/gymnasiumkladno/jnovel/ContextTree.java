@@ -100,7 +100,7 @@ public class ContextTree extends JDialog {
 		if(!location.equals(""))
 			CMD = new String[]{"ncplist","-S",server,"-o",location, "-c", location, "-A", "-Q"};
 		else
-			CMD = new String[]{"ncplist","-S",server, "-c ", "", "-A", "-Q"};
+			CMD = new String[]{"ncplist","-S",server,"-A", "-Q"};
 		String data= getProcessOutput(CMD);
 		String[] lines = data.split("\n");
 		for(String line: lines){
@@ -119,11 +119,9 @@ public class ContextTree extends JDialog {
 				return null;
 			BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			StringBuilder build = new StringBuilder();
-			while(true){
-				int i = r.read();
-				if(i==-1)
-					break;
-				build.append((char)i);
+			String s = null;
+			while ((s = r.readLine()) != null) {
+				build.append(s).append('\n');
 			}
 			r.close();
 			return build.toString();
