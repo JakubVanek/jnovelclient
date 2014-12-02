@@ -1,23 +1,23 @@
 package cz.gymnasiumkladno.jnovel;
 
 import javax.swing.*;
-import javax.swing.event.TreeModelListener;
 import javax.swing.tree.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by kuba on 25.11.14.
+ * NDS tree explorer
+ * @author Jakub Vaněk
  */
 public class ContextTree extends JDialog {
-	public Object lck;
+	public final Object lck;
 	private JTree tree1;
 	private JPanel root;
 	private JButton vybratButton;
@@ -64,7 +64,6 @@ public class ContextTree extends JDialog {
 		pack();
 		setVisible(true);
 	}
-	static int depth = 0;
 	String getSelection() {
 		if(selected){
 			DefaultMutableTreeNode node=(DefaultMutableTreeNode)tree1.getSelectionPath().getLastPathComponent();
@@ -74,13 +73,16 @@ public class ContextTree extends JDialog {
 				build.append((String)actual.getUserObject()).append('.');
 				actual = (DefaultMutableTreeNode)actual.getParent();
 			}
-			return build.substring(0,build.length()-1);
+			if(build.length()>0)
+				return build.substring(0,build.length()-1);
+			else
+				return "";
 		}
 		else
 			return "";
 	}
 	public static void getContextName(final MainWindow owner, final String server) {
-		ContextTree t = new ContextTree(owner,server);
+		new ContextTree(owner,server);
 	}
 	private void fillTree(String server, DefaultMutableTreeNode root){
 		fillSubTree(server, root);
@@ -105,31 +107,38 @@ public class ContextTree extends JDialog {
 		return str.toString();
 	}
 	public static String[] listCtxs(String server, String location){
-		List<String> subcontexts = new LinkedList<String>();
+		List<String> subcontexts = new LinkedList<>();
 		String[] CMD;
 		if(!location.equals(""))
 			CMD = new String[]{"ncplist","-S",server,"-o",location, "-c", location, "-A", "-Q"};
 		else
 			CMD = new String[]{"ncplist","-S",server,"-A", "-Q"};
 		String data= getProcessOutput(CMD);
-		String[] lines = data.split("\n");
-		for(String line: lines){
-			String[] parts = line.split("=");
-			if(parts[0].equals("O")||parts[0].equals("OU"))
-				subcontexts.add(parts[1]);
+		if(data != null) {
+			String[] lines = data.split("\n");
+			for (String line : lines) {
+				String[] parts = line.split("=");
+				if (parts[0].equals("O") || parts[0].equals("OU"))
+					subcontexts.add(parts[1]);
+			}
 		}
 		return subcontexts.toArray(new String[subcontexts.size()]);
 	}
 	public static String getProcessOutput(String[] cmd){
 		try {
 			ProcessBuilder b = new ProcessBuilder(cmd);
-			Process p = b.start();
+			Process p;
+			try {
+				p = b.start();
+			}catch(IOException ignored){
+				return null;
+			}
 			p.waitFor();
 			if (p.exitValue() != 0)
 				return null;
 			BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			StringBuilder build = new StringBuilder();
-			String s = null;
+			String s;
 			while ((s = r.readLine()) != null) {
 				build.append(s).append('\n');
 			}

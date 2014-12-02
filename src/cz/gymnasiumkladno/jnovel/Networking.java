@@ -1,9 +1,5 @@
 package cz.gymnasiumkladno.jnovel;
 
-import java.io.InputStreamReader;
-import java.util.List;
-import java.util.Scanner;
-
 public class Networking {
 	public static Process connect(String serverName, String dnsName, String context, String user, String password, String mountpath, boolean tcp) {
 		try {
@@ -37,26 +33,4 @@ public class Networking {
 			return null;
 		}
 	}
-	/* // FIXME dodělat
-	public static String[] listObjects(String server, String path){
-		try {
-			String[] CMD;
-			if (path.isEmpty())
-				CMD = new String[]{"ncplist", "-S", server};
-			else
-				CMD = new String[]{"ncplist", "-S", server, "-o", path};
-			ProcessBuilder ncp = new ProcessBuilder(CMD);
-			Process p = ncp.start();
-			Scanner stdout = new Scanner(p.getInputStream());
-			//Scanner stderr = new Scanner(p.getErrorStream());
-			p.waitFor();
-			List<String> data;
-			while(stdout.hasNextLine()) {
-				String line = stdout.nextLine();
-				if(line.matches(""))
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}*/
 }

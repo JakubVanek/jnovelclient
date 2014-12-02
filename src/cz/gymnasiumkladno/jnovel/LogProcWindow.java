@@ -6,12 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.nio.ByteOrder;
-import java.nio.CharBuffer;
-import java.util.Scanner;
+import java.util.ResourceBundle;
+
 
 /**
- * Created by kuba on 26.11.14.
+ * Process output viewer
+ * @author Jakub Vaněk
  */
 public class LogProcWindow extends JDialog {
 	private JTextArea textArea1;
@@ -42,56 +42,71 @@ public class LogProcWindow extends JDialog {
 				} catch (Exception ignored) {
 					return;
 				}
-				SwingUtilities.invokeLater(new Runnable() {
-					@Override
-					public void run() {
-						appendText(p.toString());
-					}
-				});
-				while (ok) {
-					try {
-						final String append = stdout.readLine();
-						if (append == null)
-							throw new Exception();
+
+				String s;
+				try {
+					while ((s = stdout.readLine()) != null) {
+						final String a = s;
 						SwingUtilities.invokeLater(new Runnable() {
 							@Override
 							public void run() {
-								appendText(append);
+								appendText(a + '\n');
 							}
 						});
-					} catch (Exception ignored) {
-						ok = false;
 					}
-				}
-				ok = true;
-				appendText("\n");
-				while (ok) {
-					try {
-						final String append = stderr.readLine();
-						if (append == null)
-							throw new Exception();
+					int chari;
+					final StringBuilder b = new StringBuilder();
+					while ((chari = stdout.read()) != -1) {
+						b.append((char) chari);
+					}
+					if (b.length() != 0)
 						SwingUtilities.invokeLater(new Runnable() {
 							@Override
 							public void run() {
-								appendText(append);
+								appendText(b.append('\n').toString());
 							}
 						});
-					} catch (Exception ignored) {
-						ok = false;
+				}catch(Exception e){e.printStackTrace();}
+
+
+				try {
+					while ((s = stderr.readLine()) != null) {
+						final String a = s;
+						SwingUtilities.invokeLater(new Runnable() {
+							@Override
+							public void run() {
+								appendText(a + '\n');
+							}
+						});
 					}
-				}
+					int chari;
+					final StringBuilder b = new StringBuilder();
+					while ((chari = stderr.read()) != -1) {
+						b.append((char) chari);
+					}
+					if (b.length() != 0)
+						SwingUtilities.invokeLater(new Runnable() {
+							@Override
+							public void run() {
+								appendText(b.append('\n').toString());
+							}
+						});
+				}catch(Exception e){e.printStackTrace();}
+
 				try {
 					stdout.close();
 					stderr.close();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+
+				final ResourceBundle bundle = ResourceBundle.getBundle("Strings");
 				if (p.exitValue() == 0) {
 					Success = true;
 					SwingUtilities.invokeLater(new Runnable() {
 						@Override
 						public void run() {
-							appendText("\n--- Hotovo :) ---");
+							appendText(bundle.getString("Logger.success"));
 						}
 					});
 				}
@@ -100,7 +115,7 @@ public class LogProcWindow extends JDialog {
 					SwingUtilities.invokeLater(new Runnable() {
 						@Override
 						public void run() {
-							appendText("\n--- Nastala chyba :( ---");
+							appendText(bundle.getString("Logger.fail"));
 						}
 					});
 				}

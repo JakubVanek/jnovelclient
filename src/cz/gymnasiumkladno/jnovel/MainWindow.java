@@ -1,6 +1,5 @@
 package cz.gymnasiumkladno.jnovel;
 
-import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -13,7 +12,8 @@ import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
 
 /**
- * Created by kuba on 25.11.14.
+ * Main login window
+ * @author Jakub Vaněk
  */
 public class MainWindow extends JFrame {
 	private JPanel rootPanel;
@@ -77,7 +77,8 @@ public class MainWindow extends JFrame {
 						(String) serverip.getSelectedItem(),
 						(String) kontext.getSelectedItem(),
 						username.getText(),
-						password.getText(), (String) mountpoint.getSelectedItem(), onlytcp.isSelected());
+						new String(password.getPassword()), (String) mountpoint.getSelectedItem(), onlytcp.isSelected());
+				// I KNOW THE PASSWORD CODE ABOVE IS UNSECURE BUT I DON'T KNOW ANY BETTER METHOD
 				LogProcWindow w = new LogProcWindow(MainWindow.this,proc);
 				if(w.Success) {
 					savePrefs();
@@ -168,7 +169,7 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				Process proc = Networking.disConnect((String)mountpoint.getSelectedItem());
-				LogProcWindow w = new LogProcWindow(MainWindow.this,proc);
+				new LogProcWindow(MainWindow.this,proc);
 			}
 		});
 	}
