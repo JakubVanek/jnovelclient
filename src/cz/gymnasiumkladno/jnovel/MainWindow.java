@@ -114,7 +114,7 @@ public class MainWindow extends JFrame {
 		getkontext.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				addField(kontext, ContextTree.getContextName(MainWindow.this,(String)serverip.getSelectedItem()));
+				ContextTree.getContextName(MainWindow.this,(String)serverip.getSelectedItem());
 				savePrefs();
 			}
 		});
@@ -225,5 +225,13 @@ public class MainWindow extends JFrame {
 		prefs.put("serverip",srvip);
 		prefs.put("mountpoint",mount);
 		prefs.putBoolean("tcp",onlytcp.isSelected());
+	}
+	public void setContext(final String context){
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				addField(kontext,context);
+			}
+		});
 	}
 }

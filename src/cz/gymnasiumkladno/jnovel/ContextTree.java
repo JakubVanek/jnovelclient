@@ -17,25 +17,24 @@ import java.util.List;
  * Created by kuba on 25.11.14.
  */
 public class ContextTree extends JDialog {
+	public Object lck;
 	private JTree tree1;
 	private JPanel root;
 	private JButton vybratButton;
 	private JButton stornoButton;
 	boolean selected = false;
-	String selection = "";
-	public ContextTree(final Window owner, final String server){
+	public ContextTree(final MainWindow owner, final String server){
 		super(owner);
+		lck = new Object();
 		setContentPane(root);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		addWindowStateListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree1.getLastSelectedPathComponent();
-				if(node != null) {
-					Object nodeInfo = node.getUserObject();
-					selection = (String) nodeInfo;
-				}
 				super.windowClosing(e);
+				synchronized (lck) {
+					lck.notify();
+				}
 			}
 		});
 		DefaultTreeModel model = (DefaultTreeModel) tree1.getModel();
@@ -58,6 +57,7 @@ public class ContextTree extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				selected = true;
+				owner.setContext(getSelection());
 				dispose();
 			}
 		});
@@ -65,12 +65,22 @@ public class ContextTree extends JDialog {
 		setVisible(true);
 	}
 	static int depth = 0;
-	public static String getContextName(final Window owner, final String server) {
-		ContextTree t = new ContextTree(owner,server);
-		if(t.selected)
-			return t.selection;
+	String getSelection() {
+		if(selected){
+			DefaultMutableTreeNode node=(DefaultMutableTreeNode)tree1.getSelectionPath().getLastPathComponent();
+			StringBuilder build = new StringBuilder();
+			DefaultMutableTreeNode actual = node;
+			while(actual!=null && !actual.getUserObject().equals("[ROOT]")){
+				build.append((String)actual.getUserObject()).append('.');
+				actual = (DefaultMutableTreeNode)actual.getParent();
+			}
+			return build.substring(0,build.length()-1);
+		}
 		else
 			return "";
+	}
+	public static void getContextName(final MainWindow owner, final String server) {
+		ContextTree t = new ContextTree(owner,server);
 	}
 	private void fillTree(String server, DefaultMutableTreeNode root){
 		fillSubTree(server, root);
