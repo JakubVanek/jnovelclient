@@ -1,4 +1,4 @@
-package cz.gymnasiumkladno.jnovel;
+package net.jecool.jakubvanekpc.jnovel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -39,7 +39,7 @@ public class MainWindow extends JFrame {
 	public MainWindow()
 	{
 		super("JNovel Client");
-		prefs = Preferences.userNodeForPackage(cz.gymnasiumkladno.jnovel.MainWindow.class);
+		prefs = Preferences.userNodeForPackage(MainWindow.class);
 		setContentPane(rootPanel);
 		try{
 			BufferedImage image=ImageIO.read(ClassLoader.getSystemResourceAsStream("logo.png"));

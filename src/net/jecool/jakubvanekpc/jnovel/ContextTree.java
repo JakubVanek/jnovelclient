@@ -1,4 +1,4 @@
-package cz.gymnasiumkladno.jnovel;
+package net.jecool.jakubvanekpc.jnovel;
 
 import javax.swing.*;
 import javax.swing.tree.*;

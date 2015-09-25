@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Main-Class: cz.gymnasiumkladno.jnovel.Main
+Main-Class: net.jecool.jakubvanekpc.jnovel.Main
 Created-By: Jakub Vaněk
 Application-Name: JNovelClient
 Application-Description: Java Novel client

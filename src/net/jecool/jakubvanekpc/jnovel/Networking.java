@@ -1,4 +1,4 @@
-package cz.gymnasiumkladno.jnovel;
+package net.jecool.jakubvanekpc.jnovel;
 
 public class Networking {
 	public static Process connect(String serverName, String dnsName, String context, String user, String password, String mountpath, boolean tcp) {
